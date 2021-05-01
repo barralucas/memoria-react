@@ -111,6 +111,27 @@ let game = {
 
             [this.cards[randomIndex], this.cards[currentIndex]] = [this.cards[currentIndex], this.cards[randomIndex]];
         }
+    },
+
+    flipCard: function (cardId, gameOverCallBack, noMatchCallBach) {
+        if (this.setCard(cardId)) {
+            if (this.secondCard) {
+                if (this.checkMatch()) {
+                    this.clearCards();
+                    if (this.checkGameOver()) {
+                        // Game Over
+                        gameOverCallBack();
+                    }
+                } else {
+
+                    setTimeout(() => {
+                        //No Match
+                        this.unflipCards();
+                        noMatchCallBach();
+                    }, 1000);
+                }
+            }
+        }
     }
 }
 
